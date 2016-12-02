@@ -1,0 +1,10 @@
+.PageTitle {
+  font-family: Helvetica;
+  font-size: 50px;
+  font-weight: 100;
+  text-align: center;
+  color: #4a4a4a;
+  text-transform: capitalize;
+  font-family: 'Open Sans Hebrew', sans-serif;
+  margin-bottom: 35px;
+}
