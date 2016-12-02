@@ -1,0 +1,92 @@
+.textInput {
+  width: 293px;
+	height: 48px;
+	border-radius: 4px;
+	background-color: #ffffff;
+	border: solid 1px #727272;
+  display: inline-block;
+  box-sizing: border-box;
+}
+
+input[type=password]::-ms-reveal,
+input[type=password]::-ms-clear
+{
+    display: none;
+}
+
+.flex{
+  display: flex;
+}
+
+.textField {
+  height: 46px;
+  border: none;
+  border-radius: 4px;
+	font-size: 16px;
+	font-weight: 300;
+  padding: 0 0 0 30px;
+  outline: none;
+  color: #4a4a4a;
+  box-sizing: border-box;
+  width: 100%;
+  background-position-x: 5%;
+  background-position-y: center;
+  background-repeat: no-repeat;
+}
+
+.textField:-webkit-autofill {
+   -webkit-box-shadow: 0 0 0px 1000px white inset;
+}
+
+.textFieldRtl {
+  background-position-x: 95%;
+  padding: 0 30px 0 0;
+}
+
+.textFieldWithIcon {
+  padding: 0 0 0 50px;
+}
+
+.textFieldRtl.textFieldWithIcon {
+  padding: 0 50px 0 0;
+}
+
+.vaild {
+  border-color: #51c332
+}
+
+.notVaild {
+  border-color: #f55
+}
+
+.icon {
+  display: inline-block;
+  width: 50px;
+  height: 46px;
+  vertical-align: top;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 10;
+  border-radius: 4px;
+  position: absolute;
+}
+
+.iconEye {
+  background: url(/assets/icons/v2/ic-show-pass.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: white;
+  width: 61px;
+  margin: 0 -61px;
+  background-size: 42px;
+}
+
+.dontShowPasswordIconEye {
+  background: url(/assets/icons/v2/ic-dont-show-pass.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: white;
+  width: 61px;
+  margin: 0 -61px;
+  background-size: 42px;
+}

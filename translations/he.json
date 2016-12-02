@@ -1,0 +1,54 @@
+{
+  "changePassword":{
+    "change_password_title":"צור סיסמא",
+    "reset_password_title":"אפס סיסמא",
+    "change_password_restrictions":"הסיסמא חייבת:",
+    "restriction_no_account_name":"לא להכיל את שם המשתמש או החברה",
+    "restriction_at_least8":"להכיל לפחות 8 תווים",
+    "restriction_not_more_than_two_identical":"לא להכיל יותר משני תווים זהים ברצף",
+    "restriction_one_lower_case":"להכיל לפחות אות קטנה אחת",
+    "restriction_one_capital_case":"להכיל לפחות אות גדולה אחת",
+    "restriction_one_number":"להכיל לפחות מספר אחד",
+    "restriction_password_expired":"אופס )-: פג תוקף הסיסמא שלך ויש לשנות סיסמא",
+    "create_password":"יצירת סיסמא",
+    "create_passwordHint":"סיסמא חדשה",
+    "change_password_dont_match":"הסיסמאות אינן תואמות",
+    "confirm_password" : "אשר סיסמא חדשה",
+    "type_your_password" : "הזן את סיסמתך החדשה",
+    "type_your_existing_password" : "הזן את סיסמתך הנוכחית",
+    "existing_password_incorrect" : "סיסמא נוכחית שגויה",
+    "existing_password_empty" : "סיסמא נוכחית ריקה",
+    "submit" : "שלח"
+
+  },
+  "forgotPassword":{
+    "sendCode":{
+      "title": "קבל קוד גישה",
+      "subtitle": "על מנת לאפס את הסיסמה, אנא ספק לנו את מספר הנייד או שם המשתמש שלך בכדי לקבל קוד גישה",
+      "user_input":"שם משתמש/מספר טלפון נייד",
+      "submit": "שלח קוד",
+      "login_link": "חזרה להתחברות"
+    },
+    "insertCode":{
+      "title": "הכנס קוד גישה",
+      "subtitle": "אנא שלח את קוד הגישה שקיבלת בכדי לאפס את הסיסמה שלך",
+      "code_input":"קוד גישה",
+      "submit": "אשר קוד",
+      "login_link": "חזרה להתחברות"
+    }
+  },
+  "login":{
+      "login_header": "התחברות",
+      "login_user_input":"טלפון/שם משתמש",
+      "login_pass_input":"סיסמא",
+      "login_submit":"התחבר",
+      "login_field_empty" : "שדה זה לא יכול להישאר ריק",
+      "login_forgot_password": "שכחת סיסמא?",
+      "login_okta_link":"התחברות לאוקטה"
+  },
+  "errorPopup": {
+    "title": "מצטערים, ארעה תקלה. אנא נסה שוב מאוחר יותר.",
+    "content": "משהו השתבש. אנא נסה שנית או צור קשר עם שירות הלקוחות.",
+    "close": "סגור"
+  }
+}

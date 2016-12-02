@@ -1,0 +1,52 @@
+{
+  "changePassword":{
+    "change_password_title":"Create password",
+    "reset_password_title":"Reset password",
+    "change_password_restrictions":"Password must:",
+    "restriction_no_account_name":"Not contain the user or company's account name",
+    "restriction_at_least8":"Be at least 8 characters",
+    "restriction_not_more_than_two_identical":"Not contain more than 2 identical characters in a row",
+    "restriction_one_lower_case":"Have at least one lowercase letter",
+    "restriction_one_capital_case":"Have at least one capital letter",
+    "restriction_one_number":"Have at least one number",
+    "restriction_password_expired":"Opps )-: Your password has expired and must be changed",
+    "create_password":"Create password",
+    "create_passwordHint":"New password",
+    "change_password_dont_match":"The passwords don't match",
+    "confirm_password" :"Confirm New Password",
+    "type_your_password" : "Type Your New Password",
+    "type_your_existing_password" : "Type Your Exisiting Password",
+    "existing_password_incorrect" : "Wrong Existing Password",
+    "existing_password_empty" : "Existing Password Empty",
+    "submit" : "Submit"
+  },
+  "login":{
+      "login_user_input": "Phone/user",
+      "login_pass_input": "Password",
+      "login_submit": "Log In",
+      "login_forgot_password": "Forgot password?",
+      "login_field_empty" : "Field cannot be empty",
+      "login_okta_link":"Okta login"
+  },
+  "forgotPassword":{
+    "sendCode":{
+      "title": "Get an access code",
+      "subtitle": "In order to reset your password, please provide your mobile number or user name to get an access code",
+      "user_input":"Phone/user",
+      "submit": "Send Code",
+      "login_link": "Return to Login"
+    },
+    "insertCode":{
+      "title": "Insert code",
+      "subtitle": "Please submit the access code you've received in order to reset your password ",
+      "code_input":"Enter access code",
+      "submit": "Submit Code",
+      "login_link": "Return to Login"
+    }
+  },
+  "errorPopup": {
+    "title": "Sorry, but something went wrong",
+    "content": "Something went wrong. Please try again or contact Customer Care for help.",
+    "close": "Close"
+  }
+}
