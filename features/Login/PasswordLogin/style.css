@@ -1,0 +1,37 @@
+.centered{
+  margin: 20px 0;
+  display: block;
+  clear:both;
+  margin-left: auto;
+  margin-right: auto;
+}
+.statusList{
+  margin-top: -15px;
+  padding: 0px 0px;
+}
+
+.textContainer{
+  margin-top: -15px;
+  width: 293px
+}
+
+.forgotPasswordText{
+  display: block;
+  text-align: right;
+  color: #9b9b9b;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  letter-spacing: 0.1px;
+  margin-left: 180px;
+}
+
+.oktaUrlStyle , .oktaUrlStyle:hover{
+  text-align: right;
+  display: block;
+  color:transparent;
+  margin-left: 180px;
+  font-size: 12px;
+}
