@@ -1,0 +1,193 @@
+#!/usr/bin/env ruby
+require 'daemons'
+require 'httparty'
+require 'redis'
+require 'logger'
+require_relative '../lib/get_taxi/realtime/drivers_pubnub_updater'
+require_relative '../lib/get_taxi/realtime/drivers_pubnub_listener'
+require_relative '../lib/get_taxi/realtime/pubnub'
+require 'statsd'
+require_relative '../lib/get_taxi/stats'
+require 'yaml'
+require 'mysql2'
+
+rails_root = File.expand_path(File.join(File.dirname(__FILE__), '../'))
+logdir = File.expand_path(File.join(rails_root, 'log'))
+pid_dir = File.expand_path(File.join(rails_root, 'tmp', 'pids'))
+
+class DriversPubnub
+  attr_accessor :rails_root, :env
+  attr_reader :redis_options, :pubnub_channel, :pubnub_options, :shutting_down
+
+  def initialize(rails_root, env)
+    @rails_root = rails_root
+    @env = env
+  end
+
+  def run
+    title('master')
+
+    @shutting_down = false
+    @system_settings = fetch_relevant_system_settings_from_db
+    read_configuration
+    set_statsd
+    GetTaxi::Stats.increment('start')
+    @updater_pid = start_updater
+    @listener_pid = start_listener
+    register_signal_handlers
+    sleep
+  end
+
+  private
+
+  def read_configuration
+    @pubnub_options = {
+       'publish_key' => @system_settings[:publish_key],
+       'subscribe_key' =>  @system_settings[:subscribe_key]
+    }
+    @redis_options = YAML.load(File.read("#{rails_root}/config/redis.yml"))[env]
+    @redis_options = @redis_options.inject({}) { |memo, (k, v)| memo[k.to_sym] = v; memo }
+
+    # It would be the easiest to just pull in rails here via
+    # require File.expand_path(File.join(@rails_root, 'config', 'environment'))
+    # And then simply do
+    # @pubnub_channel = SystemSetting.driver.channel_prefix
+    # But perhaps the higher memory footprint is not worth it for this.
+
+    if @env == 'development'
+      # we could just fetch from db in this case also, but the development channel name is
+      # written to db in development_pubnub_channel initializer which is only ran under Rails
+      require_relative '../lib/system_utils'
+      @pubnub_channel = SystemUtils.local_server_id
+    else
+      @pubnub_channel = @system_settings[:channel_prefix]
+    end
+
+    unless @pubnub_channel # legacy fallback
+      @domain = File.read("#{rails_root}/config/domain").strip
+      @pubnub_channel = HTTParty.get("http://#{@domain}/server/system_settings/driver")['channel_prefix']
+    end
+  rescue => e
+    puts 'Failed reading configuration:'
+    puts e.message
+    exit(1)
+  end
+
+  def fetch_relevant_system_settings_from_db
+    return unless db_full_config = YAML.load_file(File.join(@rails_root, 'config', 'database.yml'))
+    return unless db_config = db_full_config[@env]
+    db_config = db_config.inject({}) { |hash, (key, val)| hash[key.to_sym] = val; hash }
+    db = Mysql2::Client.new(db_config)
+    return unless channel_prefix_setting = db.query("SELECT `key`, `value` from system_settings where (`module` = 'driver' and `key` = 'channel_prefix') or module='pubnub'")
+    Hash[channel_prefix_setting.map { |row| [row["key"].to_sym, row["value"]] }]
+  end
+
+  def set_statsd
+    # app.drivers_updater.master_start.is
+    hostname = Socket.gethostname.tr('.', '_')
+    if env == 'production' && !['il-pp', 'ru-pp', 'uk-pp'].any? { |p| hostname.start_with?(p) }
+      env_prefix = 'app'
+    else
+      env_prefix = env
+    end
+
+    GetTaxi::Stats.configure do |config|
+      config.dont_report = env == 'test' || env == 'development'
+      config.suffixes = [pubnub_channel.split('.').last.downcase]
+      config.prefixes = [env_prefix, 'drivers_updater']
+      config.client = Statsd.new('54.246.101.180', 8125)
+    end
+  end
+
+  def title(suffix)
+    $0 = "drivers_pubnub:#{suffix}"
+  end
+
+  def register_signal_handlers
+    trap(:TERM) { shutdown! }
+    trap(:INT) { shutdown! }
+    trap(:CHLD) { respawn }
+  end
+
+  def shutdown!
+    puts 'Shutting down...'
+    @shutting_down = true
+    [@updater_pid, @listener_pid].compact.each do |pid|
+      unless Process.waitpid(pid, Process::WNOHANG)
+        puts "Killing #{pid}..."
+        Process.kill(:KILL, pid)
+      end
+    end
+    exit
+  end
+
+  def respawn
+    return if shutting_down
+    dead_pid = Process.wait
+    if dead_pid == @updater_pid
+      GetTaxi::Stats.increment('updater.respawn')
+      puts 'Respawning updater...'
+      @updater_pid = start_updater
+    elsif dead_pid == @listener_pid
+      GetTaxi::Stats.increment('listener.respawn')
+      puts 'Respawning listener...'
+      @listener_pid = start_listener
+    else
+      puts "Unknonw process died (#{dead_pid})"
+    end
+  end
+
+  def start_child(name)
+    pid = Process.fork do
+      title(name)
+      logger = create_logger
+      begin
+        yield
+      rescue => ex
+        GetTaxi::Stats.increment("#{name}.exception")
+        logger.error "Error with #{name}:"
+        logger.error ex.message
+        ex.backtrace.each { |trace| logger.error trace }
+        sleep(5)
+        retry
+      end
+    end
+    puts "Started #{name} with pid #{pid}."
+    pid
+  end
+
+  def start_updater
+    start_child('updater') do
+      logger = create_logger(level: Logger::INFO)
+      updater = GetTaxi::Realtime::DriversPubnubUpdater.new({ redis: Redis.new(redis_options),
+                                                              channel_prefix: pubnub_channel,
+                                                              pubnub: GetTaxi::Realtime::Pubnub.new(pubnub_options, logger) },
+                                                            logger)
+      updater.start
+    end
+  end
+
+  def start_listener
+    start_child('listener') do
+      logger = create_logger(level: Logger::INFO)
+      listener = GetTaxi::Realtime::DriversPubnubListener.new({ redis: Redis.new(redis_options),
+                                                                channel_prefix: pubnub_channel,
+                                                                pubnub: GetTaxi::Realtime::Pubnub.new(pubnub_options, logger) },
+                                                              logger)
+      listener.start
+    end
+  end
+
+  def create_logger(options = {})
+    logdir = File.expand_path(File.join(rails_root, 'log'))
+    logger = Logger.new(logdir + '/drivers_pubnub.log')
+    logger.level = options[:level] || Logger::INFO
+    logger
+  end
+end
+
+Daemons.run_proc('drivers_pubnub', dir_mode: :normal, dir: pid_dir, log_dir: logdir, log_output: true) do
+  puts "Starting DriversPubnub... #{Process.pid}"
+
+  DriversPubnub.new(rails_root, ENV['RAILS_ENV']).run
+end

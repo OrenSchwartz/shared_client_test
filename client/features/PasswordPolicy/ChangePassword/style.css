@@ -1,0 +1,69 @@
+.app {
+
+  span, input {
+    font-size: 15px;
+  }
+
+  .FieldsConteiner {
+    max-width: 1024px;
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  .FieldsConteiner > div {
+    margin: 20px 0;
+  }
+
+  .statusList {
+    margin: -15px auto -5px auto;
+    background-color: #ffffff;
+  }
+
+  .statusListConfirmPasswordOpen {
+    padding: 20px 0 15px 0;
+  }
+
+  .passwordHint {
+    width: 293px;
+    min-height: 16px;
+    font-size: 14px;
+    color: red;
+    margin: 5px auto;
+    text-align: left;
+    text-align: start;
+    font-family: Helvetica;
+  }
+
+  .headerMessage {
+    font-size: 15px;
+    font-weight: bold;
+    padding: 0 21px;
+    margin-top: 5px;
+  }
+}
+
+.serverError {
+  font-size: 16px;
+  font-weight: 300;
+  letter-spacing: 0.1px;
+  color: red;
+  border: 1px solid #f55;
+  width: 100%;
+  border-radius: 3px;
+  padding: 10px;
+  max-width: 294px;
+  box-sizing: border-box;
+  margin: 20px auto;
+
+  ul {
+    margin: 0;
+
+    li {
+      list-style: none;
+
+      span {
+        position: relative;
+      }
+    }
+  }
+}

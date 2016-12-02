@@ -1,0 +1,123 @@
+.errorPopupContainer {
+  width: 540px !important;
+  height: 74px !important;
+  padding: 0px !important;
+}
+
+.mainPopupBg {
+  width: 540px;
+  background-color: #ffffff;
+  box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.4);
+  position: relative;
+}
+
+.closePopup {
+  position: relative;
+  float: right;
+  margin-right: 34px;
+  margin-top: 34px;
+  height: 20px;
+  cursor: pointer;
+}
+.Rectangle3 {
+  width: 24px;
+  height: 1px;
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  background-color: #353535;
+}
+.Rectangle3Copy {
+  width: 24px;
+  height: 1px;
+  -webkit-transform: rotate(-135deg);
+  transform: rotate(-135deg);
+  background-color: #353535;
+}
+
+.titleText {
+  width: 314px;
+  height: 27px;
+  font-family: OpenSans;
+  font-size: 20px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  color: #2b3238;
+  display: inline-block;
+  margin: 24px 20px 23px 32px;
+  height: auto;
+}
+
+.headerBg {
+  width: 540px;
+  background-color: #f3f3f3;
+}
+
+.centerContainer{
+  margin: 38px auto 45px 66px;
+}
+
+.popUpContent {
+  width: 365px;
+  font-family: OpenSans;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.93;
+  color: #2b3238;
+  display: inline-block;
+  margin-right: 34px;
+}
+
+.disclamer {
+  width: 3px;
+  height: 15px;
+  color: #f42e2e;
+  position: relative;
+}
+
+.warningImage {
+  width: 23px;
+  height: 23px;
+  border: solid 1px #ff4141;
+  border-radius:20px;
+  float: left;
+  text-align: center;
+  margin-right: 10px;
+}
+
+.separator {
+  width: 540px;
+  height: 1px;
+  background-color: #c4c4c4;
+}
+
+.closeButtonContainer {
+  height: 98px
+}
+
+.closeButton {
+  width: 106px;
+  height: 40px;
+  border-radius: 4px;
+  background-color: #5b6572;
+  bottom: 29px;
+  right: 34px;
+  position: absolute;
+  cursor: pointer;
+  text-align: center;
+}
+
+.closeText {
+  height: 22px;
+  font-family: OpenSans;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  color: #ffffff;
+  padding-top: 8px;
+  line-height: 22px;
+  display: inline-block;
+}

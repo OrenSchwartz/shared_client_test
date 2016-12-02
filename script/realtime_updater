@@ -1,0 +1,29 @@
+#!/usr/bin/env ruby
+require 'daemons'
+
+rails_root = File.expand_path(File.join(File.dirname(__FILE__), '../'))
+logdir = File.expand_path(File.join(rails_root, 'log'))
+pid_dir = File.expand_path(File.join(rails_root, 'tmp', 'pids'))
+
+Daemons.run_proc('realtime_updater', dir_mode: :normal, dir: pid_dir, log_dir: logdir, log_output: true) do
+  Dir.chdir rails_root
+  require File.expand_path(File.join(rails_root, 'config', 'environment'))
+
+  options = {
+    'publish_key' => SystemSetting.pubnub.publish_key,
+    'subscribe_key' => SystemSetting.pubnub.subscribe_key
+  }
+
+  logger = Logger.new(logdir + '/realtime_updater.log')
+  logger.level = Logger::INFO
+  redis_options = {
+    host: GetTaxi::Application.config.redis[:host],
+    port: GetTaxi::Application.config.redis[:port],
+    db: GetTaxi::Application.config.redis[:db]
+  }
+  publisher = GetTaxi::Realtime::Pubnub.new(options, logger)
+  orders_handler = GetTaxi::Realtime::OrdersHandler.new(Redis.new(redis_options), publisher, logger)
+  service = GetTaxi::Realtime::Service.new(Redis.new(redis_options), orders_handler, logger)
+
+  service.start
+end

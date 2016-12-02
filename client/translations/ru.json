@@ -1,0 +1,54 @@
+{
+  "changePassword":{
+    "change_password_title":"Создать пароль",
+    "reset_password_title":"Восстановить пароль",
+    "change_password_restrictions":"Пароль должен:",
+    "restriction_no_account_name":"Не содержать название компании или ваше имя",
+    "restriction_at_least8":"Быть не меньше 8 знаков",
+    "restriction_not_more_than_two_identical":"Не содержать больше двух одинаковых знаков в строке",
+    "restriction_one_lower_case":"Содержать минимум одну маленькую букву",
+    "restriction_one_capital_case":"Содержать минимум одну заглавную букву",
+    "restriction_one_number":"Содержать минимум одну цифру",
+    "restriction_password_expired":"Упс :( Срок действия вашего пароля истек, обновите его",
+    "create_password":"Новый пароль",
+    "create_passwordHint":"Новый пароль",
+    "change_password_dont_match":"Пароль не совпадает",
+    "confirm_password":"Подтвердите новый пароль",
+    "type_your_password" : "Введите новый пароль",
+    "type_your_existing_password" : "Введите текущий пароль",
+    "existing_password_incorrect" : "Неправильный текущий пароль",
+    "existing_password_empty" : "Существующий пароль пуст",
+    "submit":"Отправить"
+
+  },
+  "forgotPassword":{
+    "sendCode":{
+      "title": "Получить код",
+      "subtitle": "Введите номер своего телефона для получения кода подтверждения",
+      "user_input":"Телефон/Имя пользователя",
+      "submit": "Отправить код",
+      "login_link": "Вернуться назад"
+    },
+    "insertCode":{
+      "title": "Восстановить пароль",
+      "subtitle": "Введите код подтверждения, полученный в смс",
+      "code_input":"Код подтверждения",
+      "submit": "Подтвердите код",
+      "login_link": "Вернуться назад"
+    }
+  },
+  "login":{
+      "login_header": "Войти",
+      "login_user_input":"Телефон/Имя пользователя",
+      "login_pass_input":"Пароль",
+      "login_submit":"Войти",
+      "login_field_empty" : "Это поле не может быть пустым",
+      "login_forgot_password": "Забыли пароль?",
+      "login_okta_link":"Войти в Окта"
+  },
+  "errorPopup": {
+    "title": "Извините, произошла ошибка",
+    "content": "Что-то не так.  Попробуйте еще раз или свяжитесь со службой поддержки.",
+    "close": "Закрыть"
+  }
+}
