@@ -1,0 +1,28 @@
+.bubble {
+  width: 100%;
+  background-color: #FFF9C4;
+  border: solid 1px #FFE082;
+  color: #444444;
+  border-radius: 3px;
+  padding: 5px 10px;
+  max-width: 294px;
+  box-sizing: border-box;
+  margin: 20px auto;
+}
+
+.bubble.error {
+  background-color: #FFCDD2;
+  border: solid 1px #E57373;
+  padding-top: 10px;
+}
+
+.bubble ul {
+  padding: 0 38px;
+  font-size: 16px;
+}
+
+.bubble li span{
+  position: relative;
+  left:-2px;
+  right: -2px;
+}

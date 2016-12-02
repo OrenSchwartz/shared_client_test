@@ -1,0 +1,21 @@
+.btn {
+  /* reset inhereted styles */
+  all: initial;
+  width: 293px;
+	height: 52px;
+	border-radius: 4px;
+	background-color: #fdb924;
+  font-size: 23px;
+  color: #ffffff;
+  font-weight: 100;
+  line-height: 52px;
+  display: inline-block;
+  cursor: pointer;
+  text-align: center;
+  font-family: 'Open Sans Hebrew', sans-serif;
+  border-width: 0px;
+}
+
+.btn:disabled {
+  color:rgba(255, 255, 255, 0.6)
+}
